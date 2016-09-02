@@ -272,3 +272,253 @@ Parameter | Required | Description
 fileName | true | File name to be uploaded
 fileType | true | File type to be uploaded
 timestamp | true | Unix time stamp of when file is to be uploaded
+
+# V2
+
+## Users
+
+```http
+POST /api/v2/users/:user_id/new_password HTTP/1.1
+Authorization: Bearer <USER BLITZ TOKEN>
+
+{
+  "email": "lekan@blitz.com",
+  "password": "blitz-123456"
+}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 805,
+    "email": "lekan@blitz.com",
+    "created_at": "2016-08-18T11:46:22.168Z",
+    "updated_at": "2016-08-29T14:54:05.667Z",
+    "first_name": "Olalekan",
+    "last_name": "Sogunle",
+    "user_type": "invite",
+    "name": null,
+    "phone_no": null,
+    "company": null,
+    "coupon_id": null,
+    "uid": "116243354438387817309",
+    "provider": "google",
+    "provider_uid": {
+    "email": "lekan@blitz.com",
+    "google": "116243354438387817309"
+    },
+    "password_updated": true
+  }
+}
+```
+
+To create a new password for newly registered users.
+
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+email | true | User email
+password | true | New password to be added to user
+
+## Sessions, Login
+
+```http
+POST /api/v2/sessions HTTP/1.1
+
+{
+  "email": "lekan@blitz.com",
+  "password": "blitz-123456"
+}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 805,
+    "email": "lekan@blitz.com",
+    "created_at": "2016-08-18T11:46:22.168Z",
+    "updated_at": "2016-08-29T14:54:05.667Z",
+    "first_name": "Olalekan",
+    "last_name": "Sogunle",
+    "user_type": "invite",
+    "name": null,
+    "phone_no": null,
+    "company": null,
+    "coupon_id": null,
+    "uid": "116243354438387817309",
+    "provider": "google",
+    "provider_uid": {
+      "email": "lekan@blitz.com",
+      "google": "116243354438387817309"
+    },
+    "password_updated": true
+  },
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIU..."
+}
+```
+
+Login session creation.
+
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+email | true | User email
+password | true | User password to be validated.
+
+## Sessions, Logout
+
+```http
+DELETE /api/v2/sessions/:user_id HTTP/1.1
+Authorization: Bearer <USER BLITZ TOKEN>
+
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "message": "Successfully signed out"
+}
+```
+
+Logout from session.
+
+## Email Confirmation
+
+```http
+PUT /api/v2/confirmations/:confirmation_token HTTP/1.1
+
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 805,
+    "email": "lekan@blitz.com",
+    "created_at": "2016-08-18T11:46:22.168Z",
+    "updated_at": "2016-08-29T14:54:05.667Z",
+    "first_name": "Olalekan",
+    "last_name": "Sogunle",
+    "user_type": "invite",
+    "name": null,
+    "phone_no": null,
+    "company": null,
+    "coupon_id": null,
+    "uid": "116243354438387817309",
+    "provider": "google",
+    "provider_uid": {
+      "email": "lekan@blitz.com",
+      "google": "116243354438387817309"
+    },
+    "password_updated": true
+  }
+}
+```
+
+This is the link users click to confirms their email from the confirmation mail sent.
+
+## Request Password Reset
+
+```http
+POST /api/v2/password_resets HTTP/1.1
+
+{
+  "email": "lekan@blitz.com"
+}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 805,
+    "email": "lekan@blitz.com",
+    "created_at": "2016-08-18T11:46:22.168Z",
+    "updated_at": "2016-08-29T14:54:05.667Z",
+    "first_name": "Olalekan",
+    "last_name": "Sogunle",
+    "user_type": "invite",
+    "name": null,
+    "phone_no": null,
+    "company": null,
+    "coupon_id": null,
+    "uid": "116243354438387817309",
+    "provider": "google",
+    "provider_uid": {
+      "email": "lekan@blitz.com",
+      "google": "116243354438387817309"
+    },
+    "password_updated": true
+  }
+}
+```
+
+To request a password reset from the forgot password page.
+
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+email | true | User email
+
+## Reset password
+
+```http
+PUT api/v2/password_resets/:password_resset_token HTTP/1.1
+
+{
+  "email": "lekan@blitz.com",
+  "password": "blitz-1234567"
+}
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 805,
+    "email": "lekan@blitz.com",
+    "created_at": "2016-08-18T11:46:22.168Z",
+    "updated_at": "2016-08-29T14:54:05.667Z",
+    "first_name": "Olalekan",
+    "last_name": "Sogunle",
+    "user_type": "invite",
+    "name": null,
+    "phone_no": null,
+    "company": null,
+    "coupon_id": null,
+    "uid": "116243354438387817309",
+    "provider": "google",
+    "provider_uid": {
+      "email": "lekan@blitz.com",
+      "google": "116243354438387817309"
+    },
+    "password_updated": true
+  }
+}
+```
+
+To effect a password reset from the forgot password link.
+
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+email | true | User email
+password | true | New user password

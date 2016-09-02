@@ -1,189 +1,274 @@
 ---
-title: API Reference
+title: Blitz API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
-  - javascript
+- http
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+- <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
+- errors
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+You are welcome to the Blitz API documentation. The APIs give you access to the Blitz V1 API end points which.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+The base urls are as follows;
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+staging url: [https://blitz-api-staging.udacity.com/](https://blitz-api-staging.udacity.com/)
 
-# Authentication
+production url: [https://blitz-api.udacity.com/](https://blitz-api.udacity.com/)
 
-> To authorize, use this code:
 
-```ruby
-require 'kittn'
+# V1
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+## Coupons
+
+```http
+GET /api/v1/coupons/:coupon: HTTP/1.1
+```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "coupon" : {
+    "id": 100,
+    "code": "blitz-b438e21430y6",
+    "expiry_date": "2017-03-14T09:46:50.860Z"
+  }
+}
 ```
 
-```python
-import kittn
+Use this to submit a coupon and get it’s validity.
 
-api = kittn.authorize('meowmeowmeow')
+## Users
+
+```http
+POST /api/v1/users HTTP/1.1
+
+{
+  "first_name":"alaba",
+  "last_name": "wande",
+  "email": "makitubelo@gmail.com",
+  "phone_no": "0417892319",
+  "company":"my new phase"
+}
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "user": {
+    "id": 148,
+    "first_name": "alaba",
+    "last_name": "wande",
+    "user_type": "invite",
+    "email": "makitubelo@gmail.com",
+    "company": "my new phase",
+    "phone": "0417892319",
+    "token": "eyJ0eXAiOiJKV1QiLCJh..."
+  }
+}
 ```
 
-```javascript
-const kittn = require('kittn');
+Ping this API to request an invite to the Blitz platform.
 
-let api = kittn.authorize('meowmeowmeow');
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+first_name | true | User first name
+last_name | true | User last name
+email | true | Request user email
+phone_no | true | Phone number
+company | true | Company name  user belongs to
+
+## Projects
+
+```http
+POST /api/v1/projects HTTP/1.1
+Authorization: Bearer <USER BLITZ TOKEN>
+
+{
+  "name": "mechanical IOT parts",
+  "description": "machine learning cars and parts",
+  "tags": [
+    "iOS",
+    "android",
+    "web",
+    "machine learning",
+    "not allowed tag"
+  ]
+}
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+{
+  "project": {
+  "id": 441,
+  "name": "mechanical IOT mikolh",
+  "description": "machine learning cars",
+  "timeline": null,
+  "budget": null,
+  "status": null,
+  "to_service": null,
+    "client": {
+      "id": 797,
+      "email": "muinry@gmail.com",
+      "created_at": "2016-08-14T13:01:29.094Z",
+      "updated_at": "2016-08-14T19:27:59.535Z",
+      "provider": null,
+      "uid": null,
+      "first_name": "alaba",
+      "last_name": "wande",
+      "user_type": "client",
+      "name": null,
+      "phone_no": "0417892319",
+      "company": "my new phase",
+      "rocket_chat_id": null,
+      "coupon_id": null
+    },
+    "asset_proposals": [],
+    "quotes": [],
+    "technical_project_manager": {
+      "id": 1,
+      "full_name": "hello me",
+      "phone_number": "08078248986",
+      "photo": "photo.jpg",
+      "created_at": "2016-07-26T21:33:34.197Z",
+      "updated_at": "2016-07-26T23:15:13.294Z",
+      "email": "hello@me.com",
+      "tags": [
+        "format",
+        "new"
+      ],
+      "linked_in": "",
+      "project_memberships_count": 8,
+      "role": "technical_project_manager"
+    },
+    "created_at": "2016-08-14T19:57:47.193Z",
+    "milestones": [],
+    "tags": [
+      "android",
+      "iOS",
+      "web"
+    ],
+    "end_date": null,
+    "start_date": null
+  }
+}
 ```
 
-```python
-import kittn
+This end point is for creating new projects.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+### Accepted Request Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+  name | true | Project Name
+  description | true | Project short pitch
+  tags | false | An array of associated project tags. Allowed tags are; android, big data, css, firebase, HTML, iOS, java, javascript, linux, machine learning, mobile, objective-c, python, ruby, SQL, swift, web
+
+
+## Assets
+
+```http
+POST /api/v1/assets HTTP/1.1
+Authorization: Bearer <USER BLITZ TOKEN>
+
+{
+  "project_id":1,
+  "category": "Proposal",
+  "assets":[
+    {
+      "link": "https://s3-us-west-2.amazonaws.com/ago.go/user_uploads/78456892-mikeall",
+      "name": "mikeal.jpg"
+    },
+    {
+      "link": "https://s3-us-west-2.amazonaws.com/ago.go/user_uploads/78456892-mikeall",
+      "name": "mikeal.jpg"
+    }
+  ]
+}
 ```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+    "id": 5,
+    "link": "https://s3-us-west-2.amazonaws.com/ago.go/user_uploads/78456892-mikeall",
+    "created_at": "2016-08-14T20:03:22.516Z",
+    "updated_at": "2016-08-14T20:03:22.516Z",
+    "project_id": 1,
+    "category_id": 1,
+    "name": "mikeal.jpg",
+    "description": null
   },
   {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "id": 6,
+    "link": "https://s3-us-west-2.amazonaws.com/ago.go/user_uploads/78456892-mikeall",
+    "created_at": "2016-08-14T20:03:22.567Z",
+    "updated_at": "2016-08-14T20:03:22.567Z",
+    "project_id": 1,
+    "category_id": 1,
+    "name": "mikeal.jpg",
+    "description": null
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
+Create an asset with the url link, name and project id of the project it is attached to.
 
-### HTTP Request
+### Accepted Request Parameters
 
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
+Parameter | Required | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+project_id | true | Id of project to attach asset.
+category | true | What type of asset is being sent. Allowed categories are Proposal, and Quote.
+assets | true | An array of assets each with the link and name parameters.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
+## Signed Assets URL
 
-```ruby
-require 'kittn'
+```http
+POST /api/v1/s3/sign HTTP/1.1
+Authorization: Bearer <USER BLITZ TOKEN>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "fileName": "alltogetherdey",
+  "fileType": "image/jpg",
+  "timestamp": "4682762981"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+{
+  "signedUrl": "https://s3-us-west-2.amazonaws.com/ago.go/user_uploads/4682762981-alltogetherdey?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJQ2EZCPVL3LRYJ5A%2F20..."
+}
+```
 
-### HTTP Request
+Use this api to get signed URL for file and assets uploads.
 
-`GET http://example.com/kittens/<ID>`
+### Accepted Request Parameters
 
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
+Parameter | Required | Description
+--------- | ------- | -----------
+fileName | true | File name to be uploaded
+fileType | true | File type to be uploaded
+timestamp | true | Unix time stamp of when file is to be uploaded

@@ -278,7 +278,7 @@ timestamp | true | Unix time stamp of when file is to be uploaded
 ## Users
 
 ```http
-POST /api/v2/users/:user_id/new_password HTTP/1.1
+POST /api/v1/users/:user_id/new_password HTTP/1.1
 Authorization: Bearer <USER BLITZ TOKEN>
 
 {
@@ -327,7 +327,7 @@ password | true | New password to be added to user
 ## Sessions, Login
 
 ```http
-POST /api/v2/sessions HTTP/1.1
+POST /api/v1/sessions HTTP/1.1
 
 {
   "email": "lekan@blitz.com",
@@ -376,7 +376,7 @@ password | true | User password to be validated.
 ## Sessions, Logout
 
 ```http
-DELETE /api/v2/sessions/:user_id HTTP/1.1
+DELETE /api/v1/sessions/:user_id HTTP/1.1
 Authorization: Bearer <USER BLITZ TOKEN>
 
 ```
@@ -395,7 +395,7 @@ Logout from session.
 ## Email Confirmation
 
 ```http
-PUT /api/v2/confirmations/:confirmation_token HTTP/1.1
+PUT /api/v1/confirmations/:confirmation_token HTTP/1.1
 
 ```
 
@@ -432,7 +432,7 @@ This is the link users click to confirms their email from the confirmation mail 
 ## Request Password Reset
 
 ```http
-POST /api/v2/password_resets HTTP/1.1
+POST /api/v1/password_resets HTTP/1.1
 
 {
   "email": "lekan@blitz.com"
@@ -478,7 +478,7 @@ email | true | User email
 ## Reset password
 
 ```http
-PUT api/v2/password_resets/:password_resset_token HTTP/1.1
+PUT api/v1/password_resets/:password_resset_token HTTP/1.1
 
 {
   "email": "lekan@blitz.com",
